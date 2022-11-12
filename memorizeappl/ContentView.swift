@@ -29,11 +29,9 @@ struct ContentView: View {
                     }
                 }
             }
-//            .padding(10)
-            .font(.largeTitle)
-            .foregroundColor(.red);
+            .foregroundColor(.red)
         }
-//        .padding(.horizontal)
+        .padding(.horizontal)
     }
     
     
@@ -48,7 +46,7 @@ struct CardView: View {
         ZStack {
             if(card.isFaceUp) {
                 shape.fill().foregroundColor(.white)
-//                shape.strokeBorder(lineWidth: 3)
+                shape.strokeBorder(lineWidth: 3)
 //                shape.frame(width: 20, height: 20)
                 Text(card.content).font(.largeTitle)
                 
