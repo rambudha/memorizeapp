@@ -12,29 +12,8 @@ struct MemoryGame<CardContent> where CardContent: Equatable { // Equatable means
     
     // computed property
     private var indexOfChoosenCard: Int? {
-        get {
-            var faceUpCardIndices = [Int]();
-            for index in cards.indices {
-                if (cards[index].isFaceUp) {
-                    faceUpCardIndices.append(index)
-                }
-            }
-            
-            if faceUpCardIndices.count == 1 {
-                return faceUpCardIndices.first;
-            } else {
-                return nil;
-            }
-        }
-        set {
-            for index in cards.indices {
-                if index != newValue {
-                    cards[index].isFaceUp = false;
-                } else {
-                    cards[index].isFaceUp = true;
-                }
-            }
-        }
+        get { cards.indices.filter({cards[$0].isFaceUp}).oneAndOnly } // as a extension of an arra
+        set { cards.indices.forEach { cards[$0].isFaceUp = ($0 == newValue) } }
     }
     
     
@@ -74,5 +53,15 @@ struct MemoryGame<CardContent> where CardContent: Equatable { // Equatable means
         var isMatched = false;
         let content: CardContent;
         let id: Int
+    }
+}
+
+extension Array {
+    var oneAndOnly: Element? {
+        if count == 1 {
+            return first;
+        } else {
+            return nil;
+        }
     }
 }
