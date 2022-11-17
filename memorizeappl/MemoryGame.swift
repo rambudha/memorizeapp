@@ -37,25 +37,12 @@ struct MemoryGame<CardContent> where CardContent: Equatable { // Equatable means
             cards[choosenIndex].isFaceUp.toggle();
             
         }
-        
-        
 //        var choosenCard = cards[choosenIndex]; this is a copy not the real array of cards
-        
-        print("hello", card)
-    }
-    
-    func index(of card: Card) -> Int {
-        
-        for index in 0..<cards.count {
-            if cards[index].id == card.id {
-                return index
-            }
-        }
-        return 0;
+
     }
     
     init(noOfCards: Int, createCardContent: (Int) -> CardContent) {
-        cards = Array<Card>();
+        cards = [];
         for pairIndex in 0..<noOfCards {
             let content = createCardContent(pairIndex);
             cards.append(Card(content: content, id: pairIndex * 2));
@@ -65,9 +52,9 @@ struct MemoryGame<CardContent> where CardContent: Equatable { // Equatable means
     
     
     struct Card: Identifiable {
-        var isFaceUp: Bool = false;
-        var isMatched: Bool = false;
-        var content: CardContent;
-        var id: Int
+        var isFaceUp = false;
+        var isMatched = false;
+        let content: CardContent;
+        let id: Int
     }
 }
