@@ -10,7 +10,32 @@ import Foundation
 struct MemoryGame<CardContent> where CardContent: Equatable { // Equatable means that the cardcontent can be comapred with =
     private(set) var cards: Array<Card>;
     
-    private var indexOfChoosenCard: Int?; // not set so optional
+    // computed property
+    private var indexOfChoosenCard: Int? {
+        get {
+            var faceUpCardIndices = [Int]();
+            for index in cards.indices {
+                if (cards[index].isFaceUp) {
+                    faceUpCardIndices.append(index)
+                }
+            }
+            
+            if faceUpCardIndices.count == 1 {
+                return faceUpCardIndices.first;
+            } else {
+                return nil;
+            }
+        }
+        set {
+            for index in cards.indices {
+                if index != newValue {
+                    cards[index].isFaceUp = false;
+                } else {
+                    cards[index].isFaceUp = true;
+                }
+            }
+        }
+    }
     
     
     mutating func chooseCard (_ card: Card) {
@@ -25,17 +50,10 @@ struct MemoryGame<CardContent> where CardContent: Equatable { // Equatable means
                     cards[choosenIndex].isMatched = true;
                     cards[potentialMatchIndex].isMatched = true;
                 }
-                indexOfChoosenCard = nil;
+                cards[choosenIndex].isFaceUp = true;
             } else {
-//                for index in 0..<cards.count {
-                for index in cards.indices {
-                    cards[index].isFaceUp = false;
-                }
                 indexOfChoosenCard = choosenIndex;
             }
-            
-            cards[choosenIndex].isFaceUp.toggle();
-            
         }
 //        var choosenCard = cards[choosenIndex]; this is a copy not the real array of cards
 
